@@ -84,6 +84,10 @@ function M.fail (status, message, ...)
   return ngx.exit(ngx.HTTP_OK)
 end
 
+function M.redirect(url)
+  return ngx.redirect(url)
+end
+
 --- Formats HTTP cookie from the given arguments.
 --
 -- @tparam string name

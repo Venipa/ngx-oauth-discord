@@ -8,8 +8,8 @@ local nginx   = require 'ngx-oauth.nginx'
 local log     = nginx.log
 local method  = ngx.var.request_method
 
-if method ~= 'POST' then
-  return nginx.fail(405, "This resource supports only POST, but you've sent %s.", method)
+if method ~= 'GET' then
+  return nginx.fail(405, "This resource supports only GET, but you've sent %s.", method)
 end
 
 local conf, errs = config.load()

@@ -223,4 +223,11 @@ function M.unless (pred, when_false, value)
   return when_false(value)
 end
 
+function M.hasAccess(conf, user, guilds)
+  if conf.allowed_users ~= nil and conf.allowed_users[user.id] == true then
+    return true
+  end
+  return false
+end
+
 return M

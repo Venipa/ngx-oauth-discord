@@ -23,7 +23,9 @@ local DEFAULTS = {
   cookie_path       = '/',
   cookie_prefix     = 'oauth_',
   max_age           = 2592000, -- 30 days
-  aes_bits          = 128
+  aes_bits          = 128,
+  allowed_users     = '',
+  allowed_guilds    = ''
 }
 
 local OAAS_ENDPOINT_VARS = {'authorization_url', 'token_url', 'userinfo_url'}
@@ -62,6 +64,14 @@ local function validate (conf)
   return errors
 end
 
+local function load_ids(lines)
+  local result = {}
+  for line in lines:gmatch '[^\n]+' do
+    result[line] = true
+  end
+  return result
+end
+
 local M = {}
 
 --- Loads settings from nginx variables and ensure that all required
@@ -82,6 +92,9 @@ function M.load ()
       conf[key] = conf[key]:gsub('${oaas_uri}', conf.oaas_uri)
     end
   end
+
+  conf.allowed_users = load_ids(conf.allowed_users)
+  -- conf.allowed_guilds = load_ids(conf.allowed_guilds)
 
   local errors = validate(conf)
   return conf, #errors ~= 0 and table.concat(errors, '; ')

@@ -15,8 +15,8 @@ local fail_with_oaas_error = par(nginx.fail, 503, "Authorization server error: %
 
 
 local method  = ngx.var.request_method
-if method ~= 'POST' then
-  return nginx.fail(405, "This resource supports only POST, but you've sent %s.", method)
+if method ~= 'GET' then
+  return nginx.fail(405, "This resource supports only GET, but you've sent %s.", method)
 end
 
 local conf, err = config.load()
